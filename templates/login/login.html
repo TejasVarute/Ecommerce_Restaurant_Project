@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <title>Login</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel='icon' href='{% static "assets/icon.png" %}'>
+    <link rel='stylesheet' href='{% static "login/style.css" %}'>
+    <link rel='stylesheet' href='{% static "notification.css" %}'>
+
+    <script src="{% static 'notification.js' %}"></script>
+
+    <div id="notification-container">
+        {% for message in messages %}
+        <div class="popup-container">
+            <div class="popup {{ message.tags }}-popup">
+                <div class="popup-icon {{ message.tags }}-icon">
+                </div>
+                <div class="{{ message.tags }}-message">{{ message }}</div>
+                <div class="popup-icon close-icon" onclick="closePopup(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" aria-hidden="true" class="close-svg">
+                        <path d="m15.8333 5.34166-1.175-1.175-4.6583 4.65834-4.65833-4.65834-1.175 1.175 4.65833 4.65834-4.65833 4.6583 1.175 1.175 4.65833-4.6583 4.6583 4.6583 1.175-1.175-4.6583-4.6583z"
+                        class="close-path"></path>
+                    </svg>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</head>
+
+<body>
+    <section class='main-container'>
+        <form method="post">
+            {% csrf_token %}
+            <div class="container">
+                <div class="card1">
+                    <a class="login">Log in</a>
+                    <br>
+                    <div class="inputBox">
+                        <input type="text" name='username' required="required">
+                        <span class="user">Username</span>
+                    </div>
+
+                    <div class="inputBox">
+                        <input type="password" name='password' required="required">
+                        <span>Password</span>
+                    </div>
+                    <br>
+                    <button class="enter" type='submit'>Login</button>
+                    <a class='register-anchor' href='register'>Register New User</a>
+                </div>
+        </form>
+        </div>
+    </section>
+</body>
+</html>
