@@ -1,3 +1,4 @@
+from unittest.mock import Base
 from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
 from login.decorators import login_required_custom
 from datetime import datetime
@@ -20,7 +21,7 @@ def home(request):
 
             if order.status != temp_status.status:
                 if order.status == "DELIVERED" or order.status == "ACCEPTED":
-                    messages.success(request, f"Your Last order is {order.status}")
+                    messages.success(request, f"Your order is {order.status.capitalize()}")
                     try:
                         if order.status == "DELIVERED":
                             order_items = OrderItem.objects.filter(order=order)
@@ -48,7 +49,7 @@ def home(request):
     return render(request, 'hotel_web/home.html', {'products': products, 'cart_quantity': cart_quantity, 'user' : user, 'time' : time})
 
 def menu(request):
-    products = Product.objects.all()
+    products = Product.objects.all().order_by('status')
     user = get_object_or_404(Userdata, id=request.session.get("user_id"))
     return render(request, 'hotel_web/menu.html', {'products': products, 'user' : user,})
 

@@ -400,7 +400,7 @@ main {
     position: relative;
     font-family: "Shifty";
     margin-left: 80px;
-    top: -1ch;
+    top: -0.7ch;
     font-size: 35px;
     letter-spacing: 1px;
 }
@@ -743,7 +743,7 @@ main {
 
 .feed-form legend {
     position: relative;
-    top: -2.2ch;
+    top: -0.6ch;
     font-family: "Guavine";
     font-size: 70px;
     text-align: center;

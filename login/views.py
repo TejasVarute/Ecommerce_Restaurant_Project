@@ -3,57 +3,55 @@ from django.contrib import messages
 from django.contrib.auth.hashers import make_password, check_password
 from .models import Userdata
 
-def register(request):
-    if request.method == "POST":
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        address = request.POST['address']
-        username = request.POST['username']
-        email = request.POST['email']
-        phone = request.POST['phone']
-        password = request.POST['password']
-        
-        if Userdata.objects.filter(username=username).exists():
-            messages.error(request, "Username already taken!")
-            return redirect('loginapp:register')
-        if Userdata.objects.filter(email=email).exists():
-            messages.error(request, "Email already registered!")
-            return redirect('loginapp:register')
-        
-        hashed_password = make_password(password)
-        user = Userdata(
-            first_name=first_name,
-            last_name=last_name,
-            address=address,
-            username=username,
-            email=email,
-            phone=phone,
-            password=hashed_password
-        )
-        user.save()
-        messages.success(request, "Registration successful! Please log in.")
-        return redirect('loginapp:login')
-
-    return render(request, 'login/register.html')
-
 def login(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-
-        try:
-            user = Userdata.objects.get(username=username)
+        if request.POST['form_type'] == 'register':
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            address = request.POST['address']
+            username = request.POST['username']
+            email = request.POST['email']
+            phone = request.POST['phone']
+            password = request.POST['password']
             
-            if check_password(password, user.password):
-                request.session['user_id'] = user.id
-                request.session['username'] = user.username
-                messages.success(request, f"Welcome {user.username}!")
-                return redirect('hotelapp:home')
-            else:
-                messages.error(request, "Invalid password.")
+            if Userdata.objects.filter(username=username).exists():
+                messages.error(request, "Username already taken!")
+                return redirect('loginapp:login')
+            if Userdata.objects.filter(email=email).exists():
+                messages.error(request, "Email already registered!")
+                return redirect('loginapp:login')
+            
+            hashed_password = make_password(password)
+            user = Userdata(
+                first_name=first_name,
+                last_name=last_name,
+                address=address,
+                username=username,
+                email=email,
+                phone=phone,
+                password=hashed_password
+            )
+            user.save()
+            messages.success(request, "Registration successful! Please log in.")
+            return redirect('loginapp:login')
         
-        except Userdata.DoesNotExist:
-            messages.error(request, "User not found. Please register.")
+        elif request.POST['form_type'] == 'login':
+            username = request.POST['username']
+            password = request.POST['password']
+
+            try:
+                user = Userdata.objects.get(username=username)
+                
+                if check_password(password, user.password):
+                    request.session['user_id'] = user.id
+                    request.session['username'] = user.username
+                    messages.success(request, f"Welcome {user.username}!")
+                    return redirect('hotelapp:home')
+                else:
+                    messages.error(request, "Invalid password.")
+            
+            except Userdata.DoesNotExist:
+                messages.error(request, "User not found. Please register.")
 
     return render(request, "login/login.html")
 
