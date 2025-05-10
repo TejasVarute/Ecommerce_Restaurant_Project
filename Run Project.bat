@@ -1,5 +1,8 @@
 :: @echo off
 
+:: Change directory
+cd /d "%~dp0"
+
 :: Activate virtual environment and running project
 start cmd /k "call env\Scripts\activate && python manage.py runserver"
 
