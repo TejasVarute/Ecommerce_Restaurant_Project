@@ -6,7 +6,7 @@ A full-featured **Restaurant Management System** built using Django, designed to
 ## 🔧 Tech Stack
 
 - **Backend:** Python, Django
-- **Frontend:** HTML, CSS, Bootstrap (Django templates)
+- **Frontend:** HTML, CSS, JavaScript (Django templates)
 - **Database:** SQLite (default)
 - **Authentication:** Django's built-in system (Admin), Custom user model for Customer login
 
