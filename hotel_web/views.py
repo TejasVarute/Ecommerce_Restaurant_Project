@@ -37,7 +37,7 @@ def home(request):
                                 )
                             order.delete()
                     except Exception: pass
-                elif order.status == "REJECTED": messages.error(request, f"Your Last order is {order.status}")
+                elif order.status == "REJECTED": messages.error(request, f"Your order is {order.status.capitalize()}")
                 temp_status.status = order.status
                 temp_status.save()
 
@@ -112,6 +112,7 @@ def view_cart(request):
     try:
         cart, created = Cart.objects.get_or_create(user=user)
         cart_items = CartItem.objects.filter(cart=cart)
+        total_price = sum(item.total_price() for item in cart_items)
 
         if request.method == 'POST':
             for item in cart_items:
@@ -121,31 +122,13 @@ def view_cart(request):
                     item.quantity = int(quantity)
                     item.save()
                     
-            return redirect("hotelapp:order_detail")    
+            return redirect("hotelapp:view_cart")    
         
     except Exception as e:
         messages.error(request, f"Error occurred: {str(e)}")
         cart_items = []
     
-    return render(request, 'hotel_web/cart.html', {'cart_items': cart_items, 'user': user})
-
-
-@login_required_custom
-def order_detail(request):
-    user = get_object_or_404(Userdata, id=request.session.get("user_id"))
-    
-    try:
-        cart, created = Cart.objects.get_or_create(user=user)
-        cart_items = CartItem.objects.filter(cart=cart)
-        total_price = sum(item.total_price() for item in cart_items)
-    
-    except Exception as e:
-        messages.error(request, f"Error occurred: {str(e)}")
-        cart_items = []
-        total_price = 0
-    
-    return render(request, 'hotel_web/order.html', {'cart_items': cart_items, 'total_price': total_price, 'user': user})
-
+    return render(request, 'hotel_web/cart.html', {'cart_items': cart_items, 'total_price': total_price, 'user': user})
 
 @login_required_custom
 def place_order(request):

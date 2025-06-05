@@ -17,7 +17,7 @@ A full-featured **Restaurant Management System** built using Django, designed to
 - View Menu and Item Details
 - Add Items to Cart
 - View, Modify, and Delete Cart Items
-- Place Orders and View Order History
+- Place Orders
 
 ### 🔐 Admin Side:
 - Manage Menu Items (Add/Edit/Delete)
@@ -51,8 +51,7 @@ cd restaurant-management-system
 ### 2. Set up the Virtual Environment
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+env\Scripts\activate
 ```
 
 ### 3. Install Dependencies
@@ -99,9 +98,9 @@ Login as superuser to:
 - Admin: Uses Django’s built-in admin login.
 - Customer: Custom login system via a separate `login` app. User data stored in a custom `UserData` model.
 
-## 📸 Screenshots
+<!-- ## 📸 Screenshots
 
-> You can add some screenshots or a short demo video here.
+>  -->
 
 ## 🛠️ Future Enhancements
 

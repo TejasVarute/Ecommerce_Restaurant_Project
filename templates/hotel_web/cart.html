@@ -4,9 +4,11 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>House of Food | Cart</title>
   <link rel="stylesheet" href="{% static 'cart.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 </head>
 
 <body>
@@ -15,23 +17,69 @@
     <div class="card cart">
       <label class="title">Your cart</label>
       <div class="products">
-        
-        {% for item in cart_items %}
+
+        {% for product in cart_items %}
         <div class="product">
-          <div>
-            <span>{{ item.product.product_name }}</span>
+          <img src="{{ product.product.image.url }}" alt="product-img">
+          <div class="product-disc">
+            <span>{{ product.product.product_name }}</span>
+            <p>{{ product.product.disc }}</p>
           </div>
+          <!-- quantity buttons -->
           <div class="quantity">
-              <input type="number" id="quantity" name="quantity_{{ item.product_id }}" required="" value="{{ item.quantity }}" min="1">
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
+              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b"
+                  d="M20 12L4 12"></path>
+              </svg>
+            </button>
+            <label>
+              <input id="quantity" name="quantity_{{ product.product_id }}" min="0" value="{{ product.quantity }}"
+                type="number">
+            </label>
+            <button onclick="this.parentNode.querySelector('input[type=number]').stepUp()">
+              <svg fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" stroke="#47484b"
+                  d="M12 4V20M20 12H4"></path>
+              </svg>
+            </button>
           </div>
-          <label class="price small">Rs. {{ item.product.price }}</label>
+
+          <label class="price small">Rs. {{ product.product.price }}</label>
         </div>
+        <hr>
         {% endfor %}
-      
       </div>
-      <div class='button-container'>
-        <button type="submit" class="order-button">Place Order</button>
     </div>
-  </form> 
+
+    <!-- Right Side -->
+    <div>
+      <div class="checkout border">
+        <label class="title">Checkout</label>
+        <div class="details">
+          <span>Your cart subtotal:</span>
+          <span>Rs. {{ total_price }}</span>
+          <span>Discount through applied coupons:</span>
+          <span>Rs. 0.00</span>
+          {% comment %} <span>Delivery Charges:</span>
+          <span>Rs. 40.00</span> {% endcomment %}
+        </div>
+        <div class="checkout--footer">
+          <label class="price">Rs. {{ total_price }}</label>
+          <a href="{% url 'hotelapp:place_order' %}" class="checkout-btn">Checkout</a>
+        </div>
+      </div>
+      <br>
+      <div class="checkout coupons border">
+        <label class="title">Apply coupons</label>
+        <div>
+          <input type="text" placeholder="Apply your coupons here" class="input_field">
+          <button>Apply</button>
+        </div>
+      </div>
+    </div>
+  </form>
+
 </body>
+
 </html>
