@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% block title %}Page Not Found{% endblock  %}
+
+{% block head %}
+<style>
+    .error-container{
+       height:500px; 
+        text-align:center; 
+        justify-items: center; 
+        align-content:center;
+    }
+
+    .error-text{
+        font-size:100px;
+        color:white;
+    }
+    .error-text:hover{
+        color:red;
+    }
+
+</style>
+{% endblock head %}
+
+{% block body %}
+<div class="error-container">
+    <h1 class="error-text">404 not Found</h1>
+</div>
+{% endblock body %}

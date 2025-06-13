@@ -28,3 +28,5 @@ urlpatterns = [
     path('', lambda request : (redirect('loginapp:login', permanent=False))),
     path('hotel/', lambda request : (redirect('hotelapp:home', permanent=False))),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+handler404 = 'login.views.page_not_found'

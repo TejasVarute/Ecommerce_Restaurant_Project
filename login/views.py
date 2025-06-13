@@ -102,3 +102,6 @@ def userinfo(request):
         messages.error(request, f"Something went wrong : {str(e)}")
         return redirect("login:userinfo")
     return render(request, "login/user.html", {"user": user})
+
+def page_not_found(request, exception):
+    return render(request, 'login/error.html')
