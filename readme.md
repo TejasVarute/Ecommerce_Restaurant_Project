@@ -119,5 +119,5 @@ This project is open-source and available under the [MIT License](LICENSE).
 
 ## 👨‍💻 Author
 
-- **Tejas Varute**
-- GitHub: [@TejasVarute](https://github.com/TejasVarute)
+- **Pramod Kumbhar**
+- GitHub: [@pamms07](https://github.com/Pamms07)
