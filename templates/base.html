@@ -11,14 +11,12 @@
     <link rel='stylesheet' href='{% static "style.css" %}'>
     <link rel='stylesheet' href='{% static "notification.css" %}'>
     <link rel='stylesheet' href='{% static "menu.css" %}'>
-    <link rel='stylesheet' href='{% static "cart.css" %}'>
     <link rel='stylesheet' href='{% static "fonts.css" %}'>
     <link rel='stylesheet' href='{% static "animation.css" %}'>
     <link rel='stylesheet' href='{% static "slider.css" %}'>
 
     <script src="{% static 'notification.js' %}"></script>
     <script src="{% static 'navbar.js' %}"></script>
-
     {% block head %}
     {% endblock head %}
 </head>
@@ -121,7 +119,7 @@
                 <p>Map</p>
             </div>
         </section>
-        <p>&copy;2025 Tejas varute</p>
+        <p>&copy;2025 {{ developer }}</p>
     </footer>
 </body>
 

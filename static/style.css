@@ -444,6 +444,7 @@ main {
 .container5 {
     background-color: white;
     justify-items: center;
+    text-align: center;
     align-items: center;
     padding: 40px;
 }
@@ -470,6 +471,10 @@ main {
     justify-items: center;
     border-radius: 30px;
     animation: float 1s normal linear;
+}
+
+.cart-container{
+    text-align: center;
 }
 
 .dish-img {
@@ -533,6 +538,7 @@ main {
     height: var(--height);
     background: var(--button-color);
     position: relative;
+    justify-self: center;
     text-align: center;
     border-radius: 0.5em;
     font-family: "Arial";

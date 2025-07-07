@@ -1,15 +1,15 @@
 from unittest.mock import Base
-from django.shortcuts import render, redirect, get_object_or_404, HttpResponse
+from django.shortcuts import render, redirect, get_object_or_404
 from login.decorators import login_required_custom
 from datetime import datetime
-from login.models import Userdata
+from login.models import Userdata, Developer
 from .models import Contact, Product, Cart, CartItem, Order, OrderItem, TempStatus, Delivery
 from django.contrib import messages
-from django.utils import timezone
+from django.http import Http404
   
 def home(request):
     cart_quantity = 0
-    
+
     if request.session.get("user_id"):
         user = get_object_or_404(Userdata, id=request.session.get("user_id"))
         cart, created = Cart.objects.get_or_create(user=user)
@@ -42,16 +42,19 @@ def home(request):
                 temp_status.save()
 
         except Order.DoesNotExist: pass
+    else:
+        raise Http404("Please Login First")
+
     try: products = Product.objects.filter(status='AVAILABLE')[:6]
     except Exception: products = Product.objects.filter(status='AVAILABLE')
         
     time = datetime.now().strftime("%H:%M:%S")
-    return render(request, 'hotel_web/home.html', {'products': products, 'cart_quantity': cart_quantity, 'user' : user, 'time' : time})
+    return render(request, 'hotel_web/home.html', {'products': products, 'cart_quantity': cart_quantity, 'user' : user, 'time' : time, 'developer' : Developer.objects.get()})
 
 def menu(request):
     products = Product.objects.all().order_by('status')
     user = get_object_or_404(Userdata, id=request.session.get("user_id"))
-    return render(request, 'hotel_web/menu.html', {'products': products, 'user' : user,})
+    return render(request, 'hotel_web/menu.html', {'products': products, 'user' : user, 'developer' : Developer.objects.get()})
 
 def booking(request):
     if request.method == 'POST':
@@ -152,8 +155,7 @@ def place_order(request):
             order = order,
             product = item.product,
             quantity = item.quantity,
-            price = item.product.price
-        )
+            price = item.product.price)
     
     cart_items.delete()
     messages.info(request, "Order placed successfully!")

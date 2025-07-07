@@ -25,6 +25,7 @@
             <span>{{ product.product.product_name }}</span>
             <p>{{ product.product.disc }}</p>
           </div>
+
           <!-- quantity buttons -->
           <div class="quantity">
             <button onclick="this.parentNode.querySelector('input[type=number]').stepDown()">
@@ -61,8 +62,8 @@
           <span>Rs. {{ total_price }}</span>
           <span>Discount through applied coupons:</span>
           <span>Rs. 0.00</span>
-          {% comment %} <span>Delivery Charges:</span>
-          <span>Rs. 40.00</span> {% endcomment %}
+          <span>Delivery Charges:</span>
+          <span>Rs. 40.00</span>
         </div>
         <div class="checkout--footer">
           <label class="price">Rs. {{ total_price }}</label>
@@ -81,5 +82,4 @@
   </form>
 
 </body>
-
 </html>
