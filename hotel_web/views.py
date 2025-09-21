@@ -1,4 +1,3 @@
-from unittest.mock import Base
 from django.shortcuts import render, redirect, get_object_or_404
 from login.decorators import login_required_custom
 from datetime import datetime
@@ -49,7 +48,7 @@ def home(request):
     except Exception: products = Product.objects.filter(status='AVAILABLE')
         
     time = datetime.now().strftime("%H:%M:%S")
-    return render(request, 'hotel_web/home.html', {'products': products, 'cart_quantity': cart_quantity, 'user' : user, 'time' : time, 'developer' : Developer.objects.get()})
+    return render(request, 'hotel_web/home.html', context={'products': products, 'cart_quantity': cart_quantity, 'user' : user, 'time' : time, 'developer' : Developer.objects.get()})
 
 def menu(request):
     products = Product.objects.all().order_by('status')
